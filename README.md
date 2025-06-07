@@ -9,7 +9,8 @@ This repository contains a collection of JavaScript interview preparation materi
 └── 1-javascript-interview/
     ├── functions/         # JavaScript functions concepts and examples
     ├── map-filter-reduce/ # Array methods: map, filter, and reduce
-    └── var-let-const/    # Variable declarations and scoping
+    ├── var-let-const/    # Variable declarations and scoping
+    └── closure/          # Closure concepts and examples
 ```
 
 ## Topics Covered
@@ -30,6 +31,13 @@ This repository contains a collection of JavaScript interview preparation materi
 - Block scope vs. Function scope
 - Hoisting
 - Temporal Dead Zone (TDZ)
+
+### 4. Closures
+- Understanding Closure concept
+- Lexical scoping
+- Practical closure examples
+- Common closure patterns
+- Memory management with closures
 
 ## Getting Started
 
@@ -55,4 +63,4 @@ Feel free to contribute to this project by:
 
 ## License
 
-This project is open source and available under the MIT License. 
+This project is open source and available under the MIT License.

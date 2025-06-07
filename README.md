@@ -10,7 +10,8 @@ This repository contains a collection of JavaScript interview preparation materi
     ├── functions/         # JavaScript functions concepts and examples
     ├── map-filter-reduce/ # Array methods: map, filter, and reduce
     ├── var-let-const/    # Variable declarations and scoping
-    └── closure/          # Closure concepts and examples
+    ├── closure/          # Closure concepts and examples
+    └── currying/         # Function currying patterns and examples
 ```
 
 ## Topics Covered
@@ -38,6 +39,13 @@ This repository contains a collection of JavaScript interview preparation materi
 - Practical closure examples
 - Common closure patterns
 - Memory management with closures
+
+### 5. Currying
+- Understanding Function Currying
+- Partial Application vs Currying
+- Real-world currying examples
+- Advanced currying patterns
+- Performance considerations
 
 ## Getting Started
 

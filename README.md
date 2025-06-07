@@ -11,7 +11,8 @@ This repository contains a collection of JavaScript interview preparation materi
     ├── map-filter-reduce/ # Array methods: map, filter, and reduce
     ├── var-let-const/    # Variable declarations and scoping
     ├── closure/          # Closure concepts and examples
-    └── currying/         # Function currying patterns and examples
+    ├── currying/         # Function currying patterns and examples
+    └── objects/          # JavaScript objects and OOP concepts
 ```
 
 ## Topics Covered
@@ -46,6 +47,16 @@ This repository contains a collection of JavaScript interview preparation materi
 - Real-world currying examples
 - Advanced currying patterns
 - Performance considerations
+
+### 6. Objects and OOP
+- Object creation patterns
+- Prototypal inheritance
+- ES6 Classes and inheritance
+- Object property descriptors
+- Object methods and `this` binding
+- Object immutability
+- Object composition vs inheritance
+- Common design patterns
 
 ## Getting Started
 

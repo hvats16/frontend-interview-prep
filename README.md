@@ -12,7 +12,8 @@ This repository contains a collection of JavaScript interview preparation materi
     ├── var-let-const/    # Variable declarations and scoping
     ├── closure/          # Closure concepts and examples
     ├── currying/         # Function currying patterns and examples
-    └── objects/          # JavaScript objects and OOP concepts
+    ├── objects/          # JavaScript objects and OOP concepts
+    └── this-keyword/     # Understanding 'this' binding in JavaScript
 ```
 
 ## Topics Covered
@@ -57,6 +58,17 @@ This repository contains a collection of JavaScript interview preparation materi
 - Object immutability
 - Object composition vs inheritance
 - Common design patterns
+
+### 7. The 'this' Keyword
+- Understanding `this` binding rules
+- Default binding
+- Implicit binding
+- Explicit binding (call, apply, bind)
+- Constructor binding (new)
+- Arrow functions and lexical `this`
+- Common pitfalls and gotchas
+- `this` in different contexts (global, method, callback)
+- Event handlers and `this`
 
 ## Getting Started
 

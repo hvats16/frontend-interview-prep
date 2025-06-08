@@ -13,7 +13,8 @@ This repository contains a collection of JavaScript interview preparation materi
     ├── closure/          # Closure concepts and examples
     ├── currying/         # Function currying patterns and examples
     ├── objects/          # JavaScript objects and OOP concepts
-    └── this-keyword/     # Understanding 'this' binding in JavaScript
+    ├── this-keyword/     # Understanding 'this' binding in JavaScript
+    └── call-apply-bind/  # Function methods for controlling 'this'
 ```
 
 ## Topics Covered
@@ -69,6 +70,18 @@ This repository contains a collection of JavaScript interview preparation materi
 - Common pitfalls and gotchas
 - `this` in different contexts (global, method, callback)
 - Event handlers and `this`
+
+### 8. Call, Apply, and Bind
+- Understanding Function.prototype methods
+- Call method deep dive
+- Apply method and array arguments
+- Bind method and partial application
+- Performance implications
+- Common use cases and patterns
+- Method borrowing
+- Creating bound functions
+- Comparing call vs apply vs bind
+- Error handling with these methods
 
 ## Getting Started
 

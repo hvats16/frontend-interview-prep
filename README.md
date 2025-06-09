@@ -14,7 +14,9 @@ This repository contains a collection of JavaScript interview preparation materi
     ├── currying/         # Function currying patterns and examples
     ├── objects/          # JavaScript objects and OOP concepts
     ├── this-keyword/     # Understanding 'this' binding in JavaScript
-    └── call-apply-bind/  # Function methods for controlling 'this'
+    ├── call-apply-bind/  # Function methods for controlling 'this'
+    ├── debounce-throttle/# Debouncing and throttling techniques
+    └── event-propagation/# DOM event bubbling and capturing
 ```
 
 ## Topics Covered
@@ -82,6 +84,30 @@ This repository contains a collection of JavaScript interview preparation materi
 - Creating bound functions
 - Comparing call vs apply vs bind
 - Error handling with these methods
+
+### 9. Debounce and Throttle
+- Understanding Debouncing concept
+- Understanding Throttling concept
+- Implementing debounce from scratch
+- Implementing throttle from scratch
+- Use cases and real-world examples
+- Performance optimization techniques
+- Leading vs trailing debounce
+- Debounce with immediate option
+- Cancellable debounce/throttle
+- Common implementation patterns
+
+### 10. Event Propagation
+- DOM Event Flow phases
+- Event Bubbling explained
+- Event Capturing explained
+- Event delegation pattern
+- stopPropagation() vs stopImmediatePropagation()
+- preventDefault() usage
+- Event handling best practices
+- Custom events and propagation
+- Cross-browser considerations
+- Performance implications
 
 ## Getting Started
 

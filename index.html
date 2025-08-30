@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoodFuel.Life - Health On Your Plate</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujgHVh8Q1+4uW0aFw5r0yU/p8W5c5g5B5/g5P0B0G6fN0D+qD5/p8z3o2+w+z0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fbfd;
+        }
+        .product-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease-in-out;
+            border-radius: 1.5rem; /* More rounded corners */
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #0d9488; /* Teal color */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0f766e; /* Darker teal */
+        }
+        .btn-secondary {
+            background-color: #f0fdf4; /* Light green */
+            color: #0d9488;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            border: 1px solid #0d9488;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #d1fae5; /* Lighter green */
+        }
+        /* Removed .cart-icon-container as it's no longer fixed */
+        .cart-icon-navbar { /* New style for cart icon in navbar */
+            background-color: transparent; /* No background needed in navbar */
+            color: #0d9488; /* Teal color for icon */
+            border-radius: 9999px;
+            width: 2.5rem; /* Smaller size for navbar */
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem; /* Smaller font size */
+            cursor: pointer;
+            transition: color 0.2s ease;
+            position: relative; /* For absolute positioning of count */
+        }
+        .cart-icon-navbar:hover {
+            color: #0f766e; /* Darker teal on hover */
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+        .close-button:hover {
+            color: #333;
+        }
+        .whatsapp-btn {
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1DA851;
+        }
+
+        /* Responsive images for product cards */
+        .product-image {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Top Info Bar -->
+    <div class="bg-teal-600 text-white py-3">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+                <div class="flex items-center space-x-6 text-sm">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <a href="https://www.google.com/maps/search/?api=1&query=28.58517294897767,77.07168929283343" target="_blank" class="hover:text-teal-200 transition-colors">
+                            E-1082 Ground floor Ramphal Chowk Dwarka sector 7 New Delhi 110077
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 8527594368</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-clock"></i>
+                        <span>7:00 AM - 11:00 PM</span>
+                    </div>
+                    <a href="https://www.instagram.com/goodfuel.life?igsh=MTA1b3R6dXJ2dG5h&utm_source=qr" target="_blank" class="hover:text-teal-200 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4 mb-8 sticky top-0 z-40">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <!-- Logo placeholder - you can replace with your actual logo -->
+                <img src="https://placehold.co/40x40/0d9488/ffffff?text=GF" alt="GoodFuel Logo" class="rounded-full">
+                <h1 class="text-3xl font-bold text-gray-900">GoodFuel.<span class="text-teal-600">Life</span></h1>
+            </div>
+            <nav class="flex items-center space-x-6"> <!-- Ensured flex for alignment -->
+                <a href="#products" class="hidden md:block text-gray-600 hover:text-teal-600 font-medium transition-colors">Products</a>
+                <a href="#about" class="hidden md:block text-gray-600 hover:text-teal-600 font-medium transition-colors">About Us</a>
+                <a href="#contact" class="hidden md:block text-gray-600 hover:text-teal-600 font-medium transition-colors">Contact</a>
+
+                <!-- Cart Icon now in Navbar -->
+                <div id="cartIcon" class="cart-icon-navbar">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center opacity-0 transform scale-0 transition-all duration-300">0</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+                <section id="hero" class="text-center mb-16 bg-gradient-to-br from-teal-50 to-blue-50 rounded-3xl p-12 shadow-lg">
+            <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+                Health On Your <span class="text-teal-600">Plate</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Delicious, nutritious meals delivered fresh to your door. Fuel your body right, live your best life.
+            </p>
+            <div class="bg-white border border-teal-200 rounded-2xl p-6 mb-8 max-w-4xl mx-auto shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                    <div class="flex flex-col items-center space-y-2 text-teal-800">
+                        <div class="bg-teal-100 p-3 rounded-full">
+                            <i class="fas fa-clock text-2xl text-teal-600"></i>
+                        </div>
+                        <span class="font-semibold">Order Timing</span>
+                        <span class="text-gray-600">7:00 AM - 11:00 PM</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-2 text-teal-800">
+                        <div class="bg-teal-100 p-3 rounded-full">
+                            <i class="fas fa-truck text-2xl text-teal-600"></i>
+                        </div>
+                        <span class="font-semibold">Delivery Range</span>
+                        <span class="text-gray-600">Within 12km radius</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-2 text-teal-800">
+                        <div class="bg-teal-100 p-3 rounded-full">
+                            <i class="fas fa-leaf text-2xl text-teal-600"></i>
+                        </div>
+                        <span class="font-semibold">Fresh & Healthy</span>
+                        <span class="text-gray-600">100% Natural Ingredients</span>
+                    </div>
+                </div>
+            </div>
+            <a href="#products" class="btn-primary text-lg px-8 py-4 inline-block shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                Explore Our Menu
+            </a>
+        </section>
+
+        <section id="products" class="mb-16">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold text-gray-900 mb-4">Our Delicious Offerings</h3>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Fresh, healthy meals crafted with care and delivered to your doorstep</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Product Card 1: VEG SALAD BOWL [LEMON] -->
+                <div class="product-card p-6 shadow-md flex flex-col items-center text-center">
+                    <img src="https://placehold.co/400x200/d1fae5/0d9488?text=Salad+Bowl+Lemon" alt="VEG SALAD BOWL [LEMON]" class="product-image mb-4">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">VEG SALAD BOWL [LEMON]</h4>
+                    <p class="text-gray-600 mb-4">Rich in Protein and Fiber.</p>
+                    <div class="flex flex-col space-y-3 w-full mb-6">
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADBOWLLLEMONSize" value="small" data-price="69" class="form-radio text-teal-600" checked>
+                            <span>Small - ₹69</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADBOWLLLEMONSize" value="medium" data-price="109" class="form-radio text-teal-600">
+                            <span>Medium - ₹109</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADBOWLLLEMONSize" value="large" data-price="169" class="form-radio text-teal-600">
+                            <span>Large - ₹169</span>
+                        </label>
+                    </div>
+                    <button class="btn-primary w-full add-to-cart-btn"
+                            data-product-id="1"
+                            data-product-name="VEG SALAD BOWL [LEMON]"
+                            data-radio-group-name="VEGSALADBOWLLLEMONSize"> <!-- Added data-radio-group-name -->
+                        Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product Card 2: VEG SALAD WITH MASALA CURD -->
+                <div class="product-card p-6 shadow-md flex flex-col items-center text-center">
+                    <img src="https://placehold.co/400x200/d1fae5/0d9488?text=Salad+Masala+Curd" alt="VEG SALAD WITH MASALA CURD" class="product-image mb-4">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">VEG SALAD WITH MASALA CURD</h4>
+                    <p class="text-gray-600 mb-4">Rich in Protein And Fiber.</p>
+                    <div class="flex flex-col space-y-3 w-full mb-6">
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADWITHMASALACURDSize" value="small" data-price="79" class="form-radio text-teal-600" checked>
+                            <span>Small - ₹79</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADWITHMASALACURDSize" value="medium" data-price="119" class="form-radio text-teal-600">
+                            <span>Medium - ₹119</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="VEGSALADWITHMASALACURDSize" value="large" data-price="179" class="form-radio text-teal-600">
+                            <span>Large - ₹179</span>
+                        </label>
+                    </div>
+                    <button class="btn-primary w-full add-to-cart-btn"
+                            data-product-id="2"
+                            data-product-name="VEG SALAD WITH MASALA CURD"
+                            data-radio-group-name="VEGSALADWITHMASALACURDSize"> <!-- Added data-radio-group-name -->
+                        Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product Card 3: HEALTHY FRUITS DESSERT -->
+                <div class="product-card p-6 shadow-md flex flex-col items-center text-center">
+                    <img src="https://placehold.co/400x200/d1fae5/0d9488?text=Fruits+Dessert" alt="HEALTHY FRUITS DESSERT" class="product-image mb-4">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">HEALTHY FRUITS DESSERT</h4>
+                    <p class="text-gray-600 mb-4">No Added Sugar & Cream, Sweetened with Dates.</p>
+                    <div class="flex flex-col space-y-3 w-full mb-6">
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="HEALTHYFRUITSDESSERTSize" value="small" data-price="79" class="form-radio text-teal-600" checked>
+                            <span>Small - ₹79</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="HEALTHYFRUITSDESSERTSize" value="medium" data-price="109" class="form-radio text-teal-600">
+                            <span>Medium - ₹109</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700">
+                            <input type="radio" name="HEALTHYFRUITSDESSERTSize" value="large" data-price="129" class="form-radio text-teal-600">
+                            <span>Large - ₹129</span>
+                        </label>
+                    </div>
+                    <button class="btn-primary w-full add-to-cart-btn"
+                            data-product-id="3"
+                            data-product-name="HEALTHY FRUITS DESSERT"
+                            data-radio-group-name="HEALTHYFRUITSDESSERTSize"> <!-- Added data-radio-group-name -->
+                        Add to Cart
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="bg-gradient-to-r from-teal-50 to-blue-50 rounded-3xl p-8 md:p-12 mb-16 shadow-lg text-center">
+            <h3 class="text-4xl font-bold text-teal-800 mb-6">About GoodFuel.Life</h3>
+            <p class="text-lg text-teal-700 leading-relaxed max-w-3xl mx-auto mb-8">
+                At GoodFuel.Life, we believe that healthy eating should be easy, delicious, and accessible.
+                We craft fresh, wholesome meals using the finest ingredients, ensuring every bite nourishes
+                your body and delights your taste buds. Our mission is to help you achieve your health goals
+                without compromising on flavor or convenience.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-2xl shadow-md">
+                    <div class="bg-teal-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-heart text-2xl text-teal-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-teal-800 mb-2">Health First</h4>
+                    <p class="text-teal-700">Every ingredient is carefully selected for its nutritional value</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-md">
+                    <div class="bg-teal-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-star text-2xl text-teal-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-teal-800 mb-2">Premium Quality</h4>
+                    <p class="text-teal-700">We use only the finest, freshest ingredients available</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-md">
+                    <div class="bg-teal-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-truck text-2xl text-teal-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-teal-800 mb-2">Fast Delivery</h4>
+                    <p class="text-teal-700">Quick and reliable delivery within 12km radius</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="text-center mb-16 bg-white rounded-3xl p-8 md:p-12 shadow-lg">
+            <h3 class="text-4xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+            <p class="text-lg text-gray-700 mb-8">
+                Have questions or special requests? Reach out to us!
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
+                <div class="bg-teal-50 p-6 rounded-2xl border border-teal-200">
+                    <div class="bg-teal-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-phone-alt text-2xl text-teal-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-teal-800 mb-2">Call Us</h4>
+                    <p class="text-teal-700 text-lg">+91 8527594368</p>
+                </div>
+                <div class="bg-teal-50 p-6 rounded-2xl border border-teal-200">
+                    <div class="bg-teal-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt text-2xl text-teal-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-teal-800 mb-2">Visit Us</h4>
+                    <a href="https://www.google.com/maps/search/?api=1&query=28.58517294897767,77.07168929283343" target="_blank" class="text-teal-700 hover:text-teal-800 transition-colors">
+                        <p class="text-sm">E-1082 Ground floor Ramphal Chowk Dwarka sector 7 New Delhi 110077</p>
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <a href="https://www.instagram.com/goodfuel.life?igsh=MTA1b3R6dXJ2dG5h&utm_source=qr" target="_blank" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-4 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-110">
+                    <i class="fab fa-instagram text-3xl"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h4 class="text-xl font-bold text-teal-400 mb-4">GoodFuel.Life</h4>
+                    <p class="text-gray-300">Health on your plate, delivered fresh to your door.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-teal-400 mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#products" class="hover:text-teal-400 transition-colors">Our Menu</a></li>
+                        <li><a href="#about" class="hover:text-teal-400 transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-teal-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-teal-400 mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-300">
+                        <p>+91 8527594368</p>
+                        <p>7:00 AM - 11:00 PM</p>
+                        <p>Within 12km radius</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 GoodFuel.Life. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModalButton">&times;</span>
+            <h3 class="text-3xl font-bold text-gray-900 mb-6 text-center">Your Cart</h3>
+            <div id="cartItems" class="mb-6 max-h-60 overflow-y-auto pr-2">
+                <!-- Cart items will be loaded here by JavaScript -->
+                <p class="text-gray-500 text-center" id="emptyCartMessage">Your cart is empty.</p>
+            </div>
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200">
+                <span class="text-gray-600">Subtotal:</span>
+                <span class="text-gray-800">₹<span id="cartSubtotal">0</span></span>
+            </div>
+
+            <!-- Delivery Location Info -->
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Delivery Location</label>
+                    <button id="getLocationBtn" class="text-sm text-teal-600 hover:text-teal-800 font-medium">
+                        <i class="fas fa-location-arrow mr-1"></i>Use Current Location
+                    </button>
+                </div>
+                <div class="mt-2 text-sm text-gray-600">
+                    <span id="distanceInfo">Click "Use Current Location" to calculate delivery charge</span>
+                </div>
+                <div class="mt-2 text-sm text-red-600 hidden" id="distanceError">
+                    Delivery not available beyond 12km radius
+                </div>
+                <div class="mt-2 text-sm text-blue-600 hidden" id="locationStatus">
+                    <i class="fas fa-spinner fa-spin mr-1"></i>Getting your location...
+                </div>
+            </div>
+
+            <!-- Delivery Charge Display -->
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200">
+                <span class="text-gray-600">Delivery Charge:</span>
+                <span class="text-gray-800">₹<span id="deliveryCharge">0</span></span>
+            </div>
+            <div class="flex justify-between items-center mb-6 border-t pt-4 border-gray-200">
+                <span class="text-xl font-bold text-gray-800">Total:</span>
+                <span class="text-xl font-bold text-teal-600">₹<span id="cartTotal">0</span></span>
+            </div>
+
+            <div id="checkoutOptions" class="flex flex-col space-y-4 mb-6">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">Choose your option:</h4>
+                <button id="codButton" class="btn-primary w-full py-3 shadow-md hover:shadow-lg">
+                    Cash on Delivery
+                </button>
+                <button id="whatsappOrderButton" class="whatsapp-btn w-full py-3 shadow-md hover:shadow-lg">
+                    <i class="fab fa-whatsapp mr-2"></i> Order on WhatsApp
+                </button>
+            </div>
+
+            <!-- COD Form - Initially Hidden -->
+            <div id="codFormContainer" class="hidden">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">Cash on Delivery Details:</h4>
+                <form id="codDetailsForm" class="space-y-4">
+                    <div>
+                        <label for="customerName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="customerName" name="customerName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2" required>
+                    </div>
+                    <div>
+                        <label for="customerMobile" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                        <input type="tel" id="customerMobile" name="customerMobile" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2" pattern="[0-9]{10}" title="Please enter a 10-digit mobile number" required>
+                    </div>
+                    <div>
+                        <label for="customerAddress" class="block text-sm font-medium text-gray-700">Delivery Address</label>
+                        <textarea id="customerAddress" name="customerAddress" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2" required></textarea>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button type="button" id="backToOptionsButton" class="btn-secondary flex-1 py-3 shadow-md hover:shadow-lg">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button type="submit" id="placeCodOrderButton" class="btn-primary flex-1 py-3 shadow-md hover:shadow-lg">
+                            Place COD Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Message Box for general feedback (e.g., success message) -->
+            <div id="messageBox" class="mt-6 p-4 rounded-lg bg-green-100 text-green-800 text-center hidden">
+                <p class="font-semibold text-lg">Your order request has been sent!</p>
+                <p class="text-sm">We'll contact you shortly to confirm your order.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let deliveryCharge = 0;
+        let deliveryDistance = 0;
+        let isDeliveryAvailable = false;
+        
+        // Shop coordinates (Dwarka, New Delhi)
+        const SHOP_LOCATION = { lat: 28.58517294897767, lng: 77.07168929283343 };
+        const MAX_DELIVERY_DISTANCE = 12; // 12 km max delivery radius
+        const DELIVERY_RATE_PER_KM = 10; // ₹10 per kilometer
+        
+        const cartCountElement = document.getElementById('cartCount');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalElement = document.getElementById('cartTotal');
+        const cartSubtotalElement = document.getElementById('cartSubtotal');
+        const deliveryChargeElement = document.getElementById('deliveryCharge');
+        const getLocationBtn = document.getElementById('getLocationBtn');
+        const distanceInfoElement = document.getElementById('distanceInfo');
+        const distanceErrorElement = document.getElementById('distanceError');
+        const locationStatusElement = document.getElementById('locationStatus');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const cartIcon = document.getElementById('cartIcon');
+        const codButton = document.getElementById('codButton');
+        const whatsappOrderButton = document.getElementById('whatsappOrderButton');
+        const messageBox = document.getElementById('messageBox');
+        const checkoutOptions = document.getElementById('checkoutOptions');
+        const codFormContainer = document.getElementById('codFormContainer');
+        const codDetailsForm = document.getElementById('codDetailsForm');
+        const placeCodOrderButton = document.getElementById('placeCodOrderButton');
+        const backToOptionsButton = document.getElementById('backToOptionsButton');
+
+        // Function to update cart count display
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountElement.textContent = totalItems;
+            if (totalItems > 0) {
+                cartCountElement.classList.remove('opacity-0', 'scale-0');
+            } else {
+                cartCountElement.classList.add('opacity-0', 'scale-0');
+            }
+        }
+
+        // Function to render cart items in the modal
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                codButton.disabled = true;
+                whatsappOrderButton.disabled = true;
+                checkoutOptions.classList.remove('hidden'); // Show options if cart is empty, but buttons disabled
+                codFormContainer.classList.add('hidden'); // Hide COD form
+            } else {
+                emptyCartMessage.style.display = 'none';
+                codButton.disabled = false;
+                whatsappOrderButton.disabled = false;
+                checkoutOptions.classList.remove('hidden'); // Show options
+                codFormContainer.classList.add('hidden'); // Hide COD form initially
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('flex', 'justify-between', 'items-center', 'py-2', 'border-b', 'border-gray-100');
+                    itemElement.innerHTML = `
+                        <div class="flex-1">
+                            <p class="font-medium text-gray-900">${item.name} <span class="text-sm text-gray-500">(${item.size})</span></p>
+                            <p class="text-sm text-gray-600">₹${item.price} x ${item.quantity}</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="text-red-500 hover:text-red-700 text-lg" onclick="updateQuantity(${index}, -1)"><i class="fas fa-minus-circle"></i></button>
+                            <span class="text-gray-800 font-semibold">${item.quantity}</span>
+                            <button class="text-green-500 hover:text-green-700 text-lg" onclick="updateQuantity(${index}, 1)"><i class="fas fa-plus-circle"></i></button>
+                            <button class="ml-3 text-gray-400 hover:text-red-500" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+            }
+            updateCartTotal();
+        }
+
+        // Function to update item quantity
+        function updateQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    removeItem(index);
+                } else {
+                    renderCartItems();
+                    updateCartCount();
+                }
+            }
+        }
+
+        // Function to remove item from cart
+        function removeItem(index) {
+            cart.splice(index, 1);
+            renderCartItems();
+            updateCartCount();
+        }
+
+        // Function to calculate delivery charge based on distance
+        function calculateDeliveryCharge(distance) {
+            if (distance <= MAX_DELIVERY_DISTANCE) {
+                deliveryCharge = Math.ceil(distance * DELIVERY_RATE_PER_KM);
+                isDeliveryAvailable = true;
+                distanceErrorElement.classList.add('hidden');
+                distanceInfoElement.textContent = `Distance: ${distance.toFixed(1)}km - Delivery Charge: ₹${deliveryCharge}`;
+            } else {
+                deliveryCharge = 0;
+                isDeliveryAvailable = false;
+                distanceErrorElement.classList.remove('hidden');
+                distanceInfoElement.textContent = `Distance: ${distance.toFixed(1)}km - Beyond delivery range`;
+            }
+            deliveryChargeElement.textContent = deliveryCharge;
+            updateCartTotal();
+        }
+
+        // Function to get user's current location and calculate distance
+        function getCurrentLocationAndCalculateDistance() {
+            if (!navigator.geolocation) {
+                distanceInfoElement.textContent = 'Geolocation is not supported by this browser';
+                return;
+            }
+
+            // Show loading status
+            locationStatusElement.classList.remove('hidden');
+            distanceInfoElement.classList.add('hidden');
+            distanceErrorElement.classList.add('hidden');
+            getLocationBtn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Calculate distance using Haversine formula (straight line distance)
+                    const distance = calculateHaversineDistance(SHOP_LOCATION, userLocation);
+                    deliveryDistance = distance;
+                    calculateDeliveryCharge(distance);
+
+                    // Hide loading status
+                    locationStatusElement.classList.add('hidden');
+                    distanceInfoElement.classList.remove('hidden');
+                    getLocationBtn.disabled = false;
+                },
+                (error) => {
+                    console.error('Error getting location:', error);
+                    locationStatusElement.classList.add('hidden');
+                    distanceInfoElement.classList.remove('hidden');
+                    getLocationBtn.disabled = false;
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            distanceInfoElement.textContent = 'Location access denied. Please enable location permissions.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            distanceInfoElement.textContent = 'Location information unavailable.';
+                            break;
+                        case error.TIMEOUT:
+                            distanceInfoElement.textContent = 'Location request timed out.';
+                            break;
+                        default:
+                            distanceInfoElement.textContent = 'An unknown error occurred while getting location.';
+                            break;
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000
+                }
+            );
+        }
+
+        // Function to calculate distance between two points using Haversine formula
+        function calculateHaversineDistance(point1, point2) {
+            const R = 6371; // Earth's radius in kilometers
+            const dLat = (point2.lat - point1.lat) * Math.PI / 180;
+            const dLon = (point2.lng - point1.lng) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(point1.lat * Math.PI / 180) * Math.cos(point2.lat * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const distance = R * c; // Distance in kilometers
+            return distance;
+        }
+
+        // Function to update total price
+        function updateCartTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + deliveryCharge;
+            
+            cartSubtotalElement.textContent = subtotal.toFixed(0);
+            cartTotalElement.textContent = total.toFixed(0);
+        }
+
+        // Location button event listener
+        getLocationBtn.addEventListener('click', () => {
+            getCurrentLocationAndCalculateDistance();
+        });
+
+        // Add to Cart button logic
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.target.dataset.productId;
+                const productName = event.target.dataset.productName;
+                const radioGroupName = event.target.dataset.radioGroupName;
+                const selector = `input[name="${radioGroupName}"]:checked`;
+                
+                const sizeRadios = document.querySelectorAll(selector);
+
+                if (sizeRadios.length > 0) {
+                    const selectedSize = sizeRadios[0].value;
+                    const price = parseFloat(sizeRadios[0].dataset.price);
+
+                    const existingItem = cart.find(item => item.id === productId && item.size === selectedSize);
+
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            size: selectedSize,
+                            price: price,
+                            quantity: 1
+                        });
+                    }
+                    updateCartCount();
+                    // Optionally show a quick success message
+                    event.target.textContent = 'Added!';
+                    setTimeout(() => {
+                        event.target.textContent = 'Add to Cart';
+                    }, 1000);
+                } else {
+                    console.error('No size selected for product:', productName);
+                }
+            });
+        });
+
+        // Open/Close Modal
+        cartIcon.addEventListener('click', () => {
+            checkoutModal.style.display = 'flex';
+            renderCartItems();
+            messageBox.classList.add('hidden'); // Hide message box on modal open
+            checkoutOptions.classList.remove('hidden'); // Ensure checkout options are visible
+            codFormContainer.classList.add('hidden'); // Ensure COD form is hidden
+            codDetailsForm.reset(); // Clear form fields
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == checkoutModal) {
+                checkoutModal.style.display = 'none';
+            }
+        });
+
+        // COD Button (initial choice) Logic - now shows the form
+        codButton.addEventListener('click', () => {
+            if (cart.length > 0) {
+                // Check if delivery is available
+                if (!isDeliveryAvailable) {
+                    messageBox.innerHTML = '<p class="font-semibold text-red-700">Please enter a valid delivery address within 12km radius first.</p>';
+                    messageBox.classList.remove('hidden');
+                    messageBox.classList.remove('bg-green-100', 'text-green-800');
+                    messageBox.classList.add('bg-red-100', 'text-red-700');
+                    return;
+                }
+                
+                checkoutOptions.classList.add('hidden'); // Hide initial options
+                codFormContainer.classList.remove('hidden'); // Show COD form
+                messageBox.classList.add('hidden'); // Hide any previous message
+                
+                // Ensure form title and button text are correct for COD
+                const formTitle = document.querySelector('#codFormContainer h4');
+                const submitButton = document.getElementById('placeCodOrderButton');
+                if (formTitle) formTitle.textContent = 'Cash on Delivery Details:';
+                if (submitButton) submitButton.textContent = 'Place COD Order';
+                
+                // Remove any order type flag
+                delete codDetailsForm.dataset.orderType;
+            }
+        });
+
+        // WhatsApp Order Button (initial choice) Logic
+        whatsappOrderButton.addEventListener('click', () => {
+            if (cart.length > 0) {
+                // Check if delivery is available
+                if (!isDeliveryAvailable) {
+                    messageBox.innerHTML = '<p class="font-semibold text-red-700">Please enter a valid delivery address within 12km radius first.</p>';
+                    messageBox.classList.remove('hidden');
+                    messageBox.classList.remove('bg-green-100', 'text-green-800');
+                    messageBox.classList.add('bg-red-100', 'text-red-700');
+                    return;
+                }
+                
+                // Show customer details form first before redirecting to WhatsApp
+                checkoutOptions.classList.add('hidden'); // Hide initial options
+                codFormContainer.classList.remove('hidden'); // Show the form
+                messageBox.classList.add('hidden'); // Hide any previous message
+                
+                // Change the form title and button to reflect WhatsApp order
+                const formTitle = document.querySelector('#codFormContainer h4');
+                const submitButton = document.getElementById('placeCodOrderButton');
+                if (formTitle) formTitle.textContent = 'WhatsApp Order Details:';
+                if (submitButton) submitButton.textContent = 'Send to WhatsApp';
+                
+                // Add a flag to indicate this is a WhatsApp order
+                codDetailsForm.dataset.orderType = 'whatsapp';
+            }
+        });
+
+        // Back to Options Button Logic
+        backToOptionsButton.addEventListener('click', () => {
+            checkoutOptions.classList.remove('hidden'); // Show initial options
+            codFormContainer.classList.add('hidden'); // Hide COD form
+            messageBox.classList.add('hidden'); // Hide any previous message
+            // Reset form title and button to default
+            const formTitle = document.querySelector('#codFormContainer h4');
+            const submitButton = document.getElementById('placeCodOrderButton');
+            if (formTitle) formTitle.textContent = 'Cash on Delivery Details:';
+            if (submitButton) submitButton.textContent = 'Place COD Order';
+            delete codDetailsForm.dataset.orderType; // Remove the flag
+        });
+
+        // Place COD Order Button (from the form) Logic
+        codDetailsForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const customerName = document.getElementById('customerName').value;
+            const customerMobile = document.getElementById('customerMobile').value;
+            const customerAddress = document.getElementById('customerAddress').value;
+            const orderType = codDetailsForm.dataset.orderType || 'cod';
+
+            if (!customerName || !customerMobile || !customerAddress) {
+                // Simple client-side validation for required fields
+                messageBox.innerHTML = '<p class="font-semibold text-red-700">Please fill in all customer details.</p>';
+                messageBox.classList.remove('hidden');
+                messageBox.classList.remove('bg-green-100', 'text-green-800');
+                messageBox.classList.add('bg-red-100', 'text-red-700');
+                return;
+            }
+
+            const whatsappNumber = "8527594368";
+            const googleLocationLink = "https://www.google.com/maps/search/?api=1&query=28.58517294897767,77.07168929283343";
+            
+            // Different message format based on order type
+            let orderDetails = "";
+            if (orderType === 'whatsapp') {
+                orderDetails = "Hello, I'd like to place an order via WhatsApp!\n\n";
+            } else {
+                orderDetails = "Hello, I'd like to place a Cash on Delivery order!\n\n";
+            }
+
+            orderDetails += `*Customer Details:*\n`;
+            orderDetails += `Name: ${customerName}\n`;
+            orderDetails += `Mobile: ${customerMobile}\n`;
+            orderDetails += `Address: ${customerAddress}\n`;
+            orderDetails += `Location: ${googleLocationLink}\n\n`;
+
+            orderDetails += `*Order Details:*\n`;
+            let subtotal = 0;
+            cart.forEach(item => {
+                orderDetails += `${item.quantity} x ${item.name} (${item.size}) - ₹${item.price * item.quantity}\n`;
+                subtotal += (item.price * item.quantity);
+            });
+            orderDetails += `Subtotal: ₹${subtotal.toFixed(0)}\n`;
+            orderDetails += `Delivery Charge: ₹${deliveryCharge} (${deliveryDistance.toFixed(1)}km)\n`;
+            orderDetails += `Total: ₹${(subtotal + deliveryCharge).toFixed(0)}`;
+
+            console.log("WhatsApp message content before encoding:", orderDetails); // Added for debugging
+
+            const encodedMessage = encodeURIComponent(orderDetails);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+            // After sending to WhatsApp, reset and provide feedback
+            let successMessage = "";
+            if (orderType === 'whatsapp') {
+                successMessage = `
+                    <p class="font-semibold text-lg">Your WhatsApp order has been sent!</p>
+                    <p class="text-sm">We'll contact you shortly to confirm your order.</p>
+                `;
+            } else {
+                successMessage = `
+                    <p class="font-semibold text-lg">Your COD order request has been sent via WhatsApp!</p>
+                    <p class="text-sm">We'll contact you shortly to confirm your order.</p>
+                `;
+            }
+            
+            messageBox.innerHTML = successMessage;
+            messageBox.classList.remove('hidden');
+            messageBox.classList.remove('bg-red-100', 'text-red-700');
+            messageBox.classList.add('bg-green-100', 'text-green-800');
+
+            cart = []; // Clear cart after order attempt
+            deliveryCharge = 0;
+            deliveryDistance = 0;
+            isDeliveryAvailable = false;
+            deliveryChargeElement.textContent = '0';
+            distanceInfoElement.textContent = 'Click "Use Current Location" to calculate delivery charge';
+            distanceErrorElement.classList.add('hidden');
+            locationStatusElement.classList.add('hidden');
+            
+            updateCartCount();
+            renderCartItems(); // Re-render to show empty cart
+            codDetailsForm.reset(); // Clear form fields
+            checkoutOptions.classList.remove('hidden'); // Show initial options again
+            codFormContainer.classList.add('hidden'); // Hide COD form
+            
+            // Reset form title and button text
+            const formTitle = document.querySelector('#codFormContainer h4');
+            const submitButton = document.getElementById('placeCodOrderButton');
+            if (formTitle) formTitle.textContent = 'Cash on Delivery Details:';
+            if (submitButton) submitButton.textContent = 'Place COD Order';
+            
+            // Remove the order type flag
+            delete codDetailsForm.dataset.orderType;
+        });
+
+
+        // Back to Options Button Logic
+        backToOptionsButton.addEventListener('click', () => {
+            checkoutOptions.classList.remove('hidden'); // Show initial options
+            codFormContainer.classList.add('hidden'); // Hide COD form
+            messageBox.classList.add('hidden'); // Hide any previous message
+            // Reset form title and button to default
+            const formTitle = document.querySelector('#codFormContainer h4');
+            const submitButton = document.getElementById('placeCodOrderButton');
+            if (formTitle) formTitle.textContent = 'Cash on Delivery Details:';
+            if (submitButton) submitButton.textContent = 'Place COD Order';
+            delete codDetailsForm.dataset.orderType; // Remove the flag
+        });
+
+        // Initial cart count update
+        updateCartCount();
+
+    </script>
+</body>
+</html>

@@ -1,106 +1,86 @@
-# JavaScript Core Concepts
+# GoodFuel.Life - Health Food Delivery Website
 
-A collection of essential JavaScript concepts commonly asked in technical interviews with practical examples and implementations.
+A modern, responsive website for ordering healthy meals with integrated delivery charge calculation based on distance.
 
-## Concepts Overview
+## Features
+
+- **Product Catalog**: Browse healthy meal options with size variants
+- **Shopping Cart**: Add items, adjust quantities, and manage cart
+- **Delivery Charge Calculation**: Automatic delivery charge calculation based on distance
+- **WhatsApp Integration**: Direct order placement via WhatsApp
+- **Cash on Delivery**: COD option with customer details form
+- **Responsive Design**: Mobile-friendly interface
+
+## Delivery Charge System
+
+- **Rate**: ₹10 per kilometer
+- **Maximum Range**: 15 kilometers from shop location
+- **Shop Location**: Dwarka Sector 7, New Delhi (28.58517294897767, 77.07168929283343)
+- **Automatic Calculation**: Uses browser's Geolocation API to get user's current location
+- **Distance Formula**: Haversine formula for accurate straight-line distance calculation
+
+## Setup Instructions
+
+### 1. Browser Geolocation Support
+
+The delivery charge system now uses the browser's built-in Geolocation API, which means:
+
+- **No API keys required** - Uses native browser functionality
+- **Automatic location detection** - User clicks button to get current location
+- **Privacy-friendly** - User must explicitly grant location permission
+- **Works offline** - No external API calls needed for distance calculation
+
+### 2. Location Permissions
+
+Users will need to grant location access:
+- **First time**: Browser will prompt for location permission
+- **Permission denied**: User will see helpful error message
+- **High accuracy**: System requests most accurate location available
+
+### 3. Testing
+
+1. Open `index.html` in a web browser
+2. Add items to cart
+3. Click "Use Current Location" button
+4. Grant location permission when prompted
+5. Wait for automatic distance calculation
+6. Check delivery charge calculation
+7. Proceed with order
+
+## How It Works
+
+1. **Location Request**: User clicks "Use Current Location" button
+2. **Permission Grant**: Browser requests location access permission
+3. **Coordinate Retrieval**: Gets user's current latitude and longitude
+4. **Distance Calculation**: Uses Haversine formula to calculate straight-line distance
+5. **Charge Calculation**: Applies ₹10/km rate (max 15km)
+6. **Validation**: Prevents orders beyond delivery range
+7. **Order Processing**: Includes delivery charge in final total
+
+## File Structure
 
 ```
-.
-└── javascript-concepts/
-    ├── functions/         # Core function concepts and patterns
-    ├── map-filter-reduce/ # Array functional methods
-    ├── var-let-const/     # Variable declarations and scope
-    ├── closure/           # Lexical scope and data encapsulation
-    ├── currying/          # Function transformation techniques
-    ├── objects/           # Object patterns and inheritance
-    ├── this-keyword/      # Context binding in JavaScript
-    ├── call-apply-bind/   # Function context manipulation methods
-    ├── debounce-throttle/ # Performance optimization techniques
-    ├── event-propagation/ # DOM event flow management
-    └── compose-pipe/      # Function composition patterns
+frontend-prep/
+├── index.html          # Main website file
+├── README.md           # This file
+└── 1-javascript-interview/  # JavaScript practice files
 ```
 
-## Concept Definitions & Key Points
+## Browser Compatibility
 
-### 1. Functions
-**Definition**: Functions are first-class objects in JavaScript that can be assigned to variables, passed as arguments, and returned from other functions.
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
 
-- Function declarations vs expressions
-- Arrow functions and lexical `this`
-- Higher-order functions (functions that operate on other functions)
+## Notes
 
-### 2. Map, Filter, and Reduce
-**Definition**: Core functional programming methods for array transformation and data processing.
+- Delivery charge is calculated automatically using user's current location
+- No external API calls required - works completely offline
+- Maximum delivery distance is enforced at checkout
+- All prices are in Indian Rupees (₹)
+- Location permission is required for delivery charge calculation
 
-- **map()**: Transforms each element and returns a new array of the same length
-- **filter()**: Creates a new array with elements that pass a test condition
-- **reduce()**: Accumulates array elements into a single value using a reducer function
+## Support
 
-### 3. Variable Declarations
-**Definition**: Different ways to declare variables with distinct scoping behaviors.
-
-- **var**: Function-scoped, hoisted with undefined initialization
-- **let**: Block-scoped, hoisted without initialization (TDZ)
-- **const**: Block-scoped, immutable binding (but not immutable value)
-
-### 4. Closures
-**Definition**: A closure is a function that has access to variables from its outer (enclosing) lexical scope, even after the outer function has returned.
-
-- Enables data privacy and encapsulation
-- Creates function factories with "memory"
-- Powers module patterns and state management
-
-### 5. Currying
-**Definition**: Currying is a technique that transforms a function with multiple arguments into a sequence of functions each with a single argument.
-
-- Enables partial application of function arguments
-- Creates specialized functions from general ones
-- Improves code reusability and composition
-
-### 6. Objects and OOP
-**Definition**: JavaScript's object-oriented programming model based on prototypal inheritance rather than classical inheritance.
-
-- Prototypal inheritance chain
-- Constructor functions vs ES6 Classes
-- Object composition patterns
-
-### 7. The 'this' Keyword
-**Definition**: A context-dependent reference that points to an object to which the current code belongs or is being applied.
-
-- Determined by how a function is called (not where it's defined)
-- Four binding rules: default, implicit, explicit, and new
-- Arrow functions maintain lexical `this` binding
-
-### 8. Call, Apply, and Bind
-**Definition**: Methods that allow explicit control over function execution context (`this` value).
-
-- **call()**: Invokes function with a specified `this` and individual arguments
-- **apply()**: Invokes function with a specified `this` and arguments as an array
-- **bind()**: Returns a new function with `this` bound to a specific object
-
-### 9. Debounce and Throttle
-**Definition**: Techniques to control how many times a function can be executed over time.
-
-- **Debounce**: Delays function execution until after a specified time has elapsed since the last call
-- **Throttle**: Ensures a function executes at a limited rate (e.g., once every X milliseconds)
-- Critical for performance with rapid events like scrolling, resizing, or typing
-
-### 10. Event Propagation
-**Definition**: The process by which events travel through the DOM tree.
-
-- **Capturing phase**: Event travels down from Document to the target element
-- **Target phase**: Event reaches the target element
-- **Bubbling phase**: Event bubbles up from the target back to the Document
-- Event delegation leverages bubbling for efficient event handling
-
-### 11. Function Composition (Compose and Pipe)
-**Definition**: The process of combining multiple functions to create a new function.
-
-- **compose**: Combines functions right-to-left (mathematical composition)
-- **pipe**: Combines functions left-to-right (more readable data flow)
-- Enables building complex operations from simple functions
-- Core concept in functional programming
-
-## Getting Started
-
-Clone this repository and explore each concept directory for detailed examples and implementations.
+For technical support or questions about the delivery charge system, please refer to the Google Maps API documentation or contact the development team.
